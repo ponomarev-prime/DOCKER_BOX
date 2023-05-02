@@ -1,4 +1,5 @@
 *.env
+_draft.md
 
 ### Postgres ###
 postgres-data/

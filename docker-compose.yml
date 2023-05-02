@@ -50,8 +50,8 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+#    ports:
+#      - "5432:5432"
     networks:
       - app-network
 
@@ -60,8 +60,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
-    ports:
-      - "3306:3306"
+#    ports:
+#      - "3306:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
     networks:
@@ -76,8 +76,8 @@ services:
       - MARIADB_PASSWORD=my_password
     volumes:
       - ./mariadb:/var/lib/mysql
-    ports:
-      - 3307:3307
+#    ports:
+#      - 3307:3307
     networks:
       - app-network
 
@@ -92,6 +92,20 @@ services:
       - MARIADB_PASSWORD=my_password
     depends_on:
       - mariadb
+    networks:
+      - app-network
+
+  dotnet-app:
+    image: mcr.microsoft.com/dotnet/sdk:5.0
+    volumes:
+      - ./dotnet-app:/app
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=my_database
+      - POSTGRES_USER=my_user
+      - POSTGRES_PASSWORD=my_password
+    depends_on:
+      - postgres
     networks:
       - app-network
 
