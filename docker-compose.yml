@@ -11,9 +11,11 @@ services:
       - ./nginx/ssl:/etc/ssl/certs
       - ./nginx/html:/usr/share/nginx/html
       - ./apache/html:/var/www/html
+      - ./python-app:/app
     depends_on:
       - adminer
       - apache
+      - python-app
     networks:
       - app-network
 
@@ -42,6 +44,18 @@ services:
     networks:
       - app-network        
 
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    command: python ./app_html.py
+    volumes:
+      - ./python-app:/app
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:latest
     restart: always
@@ -52,60 +66,6 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
 #    ports:
 #      - "5432:5432"
-    networks:
-      - app-network
-
-  mysql:
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-#    ports:
-#      - "3306:3306"
-    volumes:
-      - ./mysql-data:/var/lib/mysql
-    networks:
-      - app-network
-
-  mariadb:
-    image: mariadb:latest
-    environment:
-      - MARIADB_ROOT_PASSWORD=my_root_password
-      - MARIADB_DATABASE=my_database
-      - MARIADB_USER=my_user
-      - MARIADB_PASSWORD=my_password
-    volumes:
-      - ./mariadb:/var/lib/mysql
-#    ports:
-#      - 3307:3307
-    networks:
-      - app-network
-
-  nodejs-app:
-    image: node:19
-    volumes:
-      - ./nodejs-app:/app
-    environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_DATABASE=my_database
-      - MARIADB_USER=my_user
-      - MARIADB_PASSWORD=my_password
-    depends_on:
-      - mariadb
-    networks:
-      - app-network
-
-  dotnet-app:
-    image: mcr.microsoft.com/dotnet/sdk:5.0
-    volumes:
-      - ./dotnet-app:/app
-    environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_DB=my_database
-      - POSTGRES_USER=my_user
-      - POSTGRES_PASSWORD=my_password
-    depends_on:
-      - postgres
     networks:
       - app-network
 
