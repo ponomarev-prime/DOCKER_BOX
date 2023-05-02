@@ -22,7 +22,7 @@ cur = conn.cursor()
 fake = Faker()
 
 # Массив имен
-names = ['Ahab', 'John', 'Mary', 'Alex', 'Kate', 'Mike', 'Lisa']
+names = ['Big Boss', 'Ahab', 'Ishmael', 'Quiet', 'EVA', 'Dr. Strangelove', 'Pequod', 'Revolver "Shalashaka" Ocelot', 'Benedict "Kazuhira" Miller', 'Eli', 'Paz Ortega Andrade']
 
 # Для каждого имени создаем строку в таблице
 for name in names:

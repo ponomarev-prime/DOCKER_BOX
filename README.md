@@ -12,6 +12,8 @@ Available now:
 - Adminer
 - Postgres
 - Python
+- nodejs 
+- mariadb 
 
 ## NGINX
 
@@ -54,3 +56,15 @@ CREATE TABLE mytable (
 ## PYTHON 
 
 ![](gitcontent/docker_box_python-app.png)
+
+`app_html.py` - рендерит страницу, выводит записи из БД
+
+`app_delete_frome_tb.py` - удаляет все записи в БД (id остаётся!)
+
+`app_wright_table.py` - записывает в таблицу БД, сам создаёт данные для каждого имени из `names`
+
+## NODE JS 
+
+![](gitcontent/docker_box_node-app.png)
+
+`index.js` - рендерит страницу, выводит записи из БД

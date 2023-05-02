@@ -9,3 +9,6 @@ mysql-data/
 
 ### MariaDB ###
 mariadb/
+
+### NODE JS ###
+node_modules/

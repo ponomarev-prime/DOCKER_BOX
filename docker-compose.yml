@@ -5,7 +5,6 @@ services:
     image: nginx
     ports:
       - 80:80
-#      - 443:443
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/ssl/certs
@@ -16,6 +15,7 @@ services:
       - adminer
       - apache
       - python-app
+      - nodejs-app
     networks:
       - app-network
 
@@ -56,6 +56,25 @@ services:
     depends_on:
       - postgres
 
+  nodejs-app:
+    image: node:19
+    volumes:
+      - ./nodejs-app:/app
+    command: >
+      sh -c "cd /app && node index.js"
+    # sh -c "cd /app && npm install mysql express faker && node index.js"
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_DATABASE=my_database
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+    depends_on:
+      - mariadb
+    networks:
+      - app-network
+    ports:
+      - 8010:8010
+
   postgres:
     image: postgres:latest
     restart: always
@@ -64,8 +83,18 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-#    ports:
-#      - "5432:5432"
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      - MARIADB_ROOT_PASSWORD=my_root_password
+      - MARIADB_DATABASE=my_database
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+    volumes:
+      - ./mariadb:/var/lib/mysql
     networks:
       - app-network
 
