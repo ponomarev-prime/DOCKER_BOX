@@ -5,11 +5,12 @@ services:
     image: nginx
     ports:
       - 80:80
-      - 443:443
+#      - 443:443
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/ssl/certs
       - ./nginx/html:/usr/share/nginx/html
+      - ./apache/html:/var/www/html
     depends_on:
       - adminer
       - apache
@@ -19,12 +20,12 @@ services:
   apache:
     image: httpd:latest
     volumes:
-      - ./apache/html:/usr/local/apache2/htdocs
-      - ./apache/conf:/usr/local/apache2/conf
-    expose:
-      - 8090
+      - ./apache/html:/var/www/html
+      - ./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf
     networks:
       - app-network
+    depends_on:
+        - php
 
   adminer:
     image: adminer
@@ -34,6 +35,65 @@ services:
     networks:
       - app-network
 
+  php:
+    image: php:7.4-fpm
+    volumes:
+      - ./apache/html:/var/www/html
+    networks:
+      - app-network        
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      - MARIADB_ROOT_PASSWORD=my_root_password
+      - MARIADB_DATABASE=my_database
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    ports:
+      - 3307:3307
+    networks:
+      - app-network
+
+  nodejs-app:
+    image: node:19
+    volumes:
+      - ./nodejs-app:/app
+    environment:
+      - MARIADB_HOST=mariadb
+      - MARIADB_DATABASE=my_database
+      - MARIADB_USER=my_user
+      - MARIADB_PASSWORD=my_password
+    depends_on:
+      - mariadb
+    networks:
+      - app-network
 
 networks:
   app-network:

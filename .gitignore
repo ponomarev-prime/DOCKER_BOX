@@ -1,1 +1,10 @@
 *.env
+
+### Postgres ###
+postgres-data/
+
+### MySQL ###
+mysql-data/
+
+### MariaDB ###
+mariadb/
