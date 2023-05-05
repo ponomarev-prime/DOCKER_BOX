@@ -1,9 +1,9 @@
 ![](gitcontent/app_title_text.png)
 # DOCKER BOX
 
-```
-nginx, apache, php, .net, python, nodejs, adminer, certbot, mysql, mariadb, postgres, certbot
-```
+
+**nginx, apache, php, .net, python, nodejs, adminer, certbot, mysql, mariadb, postgres, certbot**
+
 
 Available now:
 - Nginx
@@ -15,6 +15,7 @@ Available now:
 - Node JS 
 - Maria DB 
 - MySQL
+- .NET
 
 ## PS 
 
@@ -38,23 +39,17 @@ Nginx
 
 http://localhost/
 
-
-
-http://localhost/adminer
-
-http://localhost/python
-
-http://localhost/nodejs
-
 ## APACHE
 
 Apache httpd
 
 http://localhost/apache 
+
 ![](gitcontent/Apache1.png)
 
 
 http://localhost/apache/mysql_db.php
+
 ![](gitcontent/Apache2.png)
 
 ```
@@ -95,6 +90,8 @@ RUN docker-php-ext-install pdo_mysql
 ```
 ## ADMINER
 
+http://localhost/adminer
+
 ![](gitcontent/adminer1.png)
 
 Оформление:
@@ -120,6 +117,8 @@ postgres
 
 ## PYTHON 
 
+http://localhost/python
+
 ![](gitcontent/docker_box_python-app.png)
 
 `app_html.py` - рендерит страницу, выводит записи из БД
@@ -129,6 +128,8 @@ postgres
 `app_wright_table.py` - записывает в таблицу БД, сам создаёт данные для каждого имени из `names`
 
 ## NODE JS 
+
+http://localhost/nodejs
 
 ![](gitcontent/node1.png)
 
@@ -142,6 +143,8 @@ command: >
 ```
 
 ## .NET
+
+http://localhost/dotnet
 
 ![](gitcontent/dotnet1.png)
 
