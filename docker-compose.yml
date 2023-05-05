@@ -108,6 +108,18 @@ services:
     networks:
       - app-network
 
+  dotnet:
+    build:
+      context: .
+      dockerfile: Dockerfile.aspnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network
+    volumes:
+      - ./dotnet-app:/app
+    command: dotnet watch --project newweb run --urls "http://0.0.0.0:8020"  
+
 networks:
   app-network:
     driver: bridge
