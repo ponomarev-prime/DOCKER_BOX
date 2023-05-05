@@ -39,7 +39,9 @@ services:
       - app-network
 
   php:
-    image: php:7.4-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile.php
     volumes:
       - ./apache/html:/var/www/html
     networks:
@@ -62,14 +64,9 @@ services:
     volumes:
       - ./nodejs-app:/app
     command: >
-      sh -c "cd /app && npm install mysql express faker && node index.js"
+      sh -c "cd /app && node index.js"
     #  sh -c "cd /app && node index.js"
-    #  sh -c "cd /app && npm install mysql express faker && node index.js"
-    environment:
-      - MARIADB_HOST=mariadb
-      - MARIADB_DATABASE=my_database
-      - MARIADB_USER=my_user
-      - MARIADB_PASSWORD=my_password
+    #  sh -c "cd /app && npm install -g npm@9.6.6 && npm install mysql express faker && node index.js"
     depends_on:
       - mariadb
     networks:
@@ -95,6 +92,19 @@ services:
       - MARIADB_PASSWORD=my_password
     volumes:
       - ./mariadb:/var/lib/mysql
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_username
+      MYSQL_PASSWORD: my_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - ./mysql-data:/var/lib/mysql
     networks:
       - app-network
 
