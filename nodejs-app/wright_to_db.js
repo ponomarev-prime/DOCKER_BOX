@@ -2,11 +2,14 @@ const mysql = require('mysql');
 const faker = require('faker');
 
 const connection = mysql.createConnection({
-  host: 'mariadb',
-  user: 'user',
-  password: 'password',
-  database: 'my_db'
+  host: 'mariadb', // имя сервиса в docker-compose.yml
+  user: 'my_user',
+  password: 'my_password',
+  database: 'my_database'
 });
+
+// Задаем имя таблицы
+const tableName = 'my_table';
 
 connection.connect((err) => {
   if (err) throw err;
@@ -21,7 +24,7 @@ connection.connect((err) => {
     const description = faker.lorem.sentence(10);
     const key = hash(number + description).substr(0, 25);
 
-    const sql = `INSERT INTO items (name, date_created, number, description, \`key\`) VALUES ('${name}', '${date.toISOString()}', '${number}', '${description}', '${key}')`;
+    const sql = `INSERT INTO my_table (name, created_at, number, description, \`key\`) VALUES ('${name}', '${date.toISOString()}', '${number}', '${description}', '${key}')`;
 
     connection.query(sql, (err, result) => {
       if (err) throw err;

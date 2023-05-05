@@ -11,6 +11,7 @@ services:
       - ./nginx/html:/usr/share/nginx/html
       - ./apache/html:/var/www/html
       - ./python-app:/app
+      - ./nodejs-app:/app
     depends_on:
       - adminer
       - apache
@@ -61,8 +62,9 @@ services:
     volumes:
       - ./nodejs-app:/app
     command: >
-      sh -c "cd /app && node index.js"
-    # sh -c "cd /app && npm install mysql express faker && node index.js"
+      sh -c "cd /app && npm install mysql express faker && node index.js"
+    #  sh -c "cd /app && node index.js"
+    #  sh -c "cd /app && npm install mysql express faker && node index.js"
     environment:
       - MARIADB_HOST=mariadb
       - MARIADB_DATABASE=my_database
@@ -72,8 +74,6 @@ services:
       - mariadb
     networks:
       - app-network
-    ports:
-      - 8010:8010
 
   postgres:
     image: postgres:latest

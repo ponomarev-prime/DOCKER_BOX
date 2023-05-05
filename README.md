@@ -29,17 +29,23 @@ http://localhost/python
 
 ## APACHE
 
-Apache
+Apache httpd
 
 ## PHP 
 
-PHP
+PHP7.4
 
 ## ADMINER
 
 Adminer 
 
-## POSTGRES 
+Оформление:
+```
+    environment:
+      ADMINER_DESIGN: pepa-linha-dark
+```
+
+## POSTGRES SQL
 
 PosgresSQL
 ```
@@ -68,3 +74,23 @@ CREATE TABLE mytable (
 ![](gitcontent/docker_box_node-app.png)
 
 `index.js` - рендерит страницу, выводит записи из БД
+
+```
+    command: >
+      sh -c "cd /app && node index.js"
+    # sh -c "cd /app && npm install mysql express faker && node index.js"
+    # для первого запуска
+```
+
+## MARIA DB 
+
+```
+CREATE TABLE IF NOT EXISTS my_table (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  number INT NOT NULL,
+  description VARCHAR(100) NOT NULL,
+  `key` VARCHAR(25) NOT NULL
+);
+```
