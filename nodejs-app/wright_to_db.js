@@ -24,7 +24,7 @@ connection.connect((err) => {
     const description = faker.lorem.sentence(10);
     const key = hash(number + description).substr(0, 25);
 
-    const sql = `INSERT INTO my_table (name, created_at, number, description, \`key\`) VALUES ('${name}', '${date.toISOString()}', '${number}', '${description}', '${key}')`;
+    const sql = `INSERT INTO my_table (name, created_at, number, description, \`key\`) VALUES ('${name}', '${date.toISOString().slice(0, 19).replace('T', ' ')}', '${number}', '${description}', '${key}')`;
 
     connection.query(sql, (err, result) => {
       if (err) throw err;

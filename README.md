@@ -133,14 +133,29 @@ http://localhost/nodejs
 
 ![](gitcontent/node1.png)
 
-`index.js` - рендерит страницу, выводит записи из БД
-
 ```
 command: >
       sh -c "cd /app && node index.js"
     #  sh -c "cd /app && node index.js"
     #  sh -c "cd /app && npm install -g npm@9.6.6 && npm install mysql express faker && node index.js"
 ```
+
+`index.js` - рендерит страницу, выводит записи из БД
+
+```
+root@10b94c039ecc:/app# npm list
+app@ /app
++-- express@4.18.2
++-- faker@5.5.3
+`-- mysql@2.18.1
+```
+
+![](gitcontent/node_wright.png)
+
+```
+'${date.toISOString().slice(0, 19).replace('T', ' ')}'
+```
+
 
 ## .NET
 
